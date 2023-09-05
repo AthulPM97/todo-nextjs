@@ -6,15 +6,20 @@ import axios from "axios";
 
 const inter = Inter({ subsets: ["latin"] });
 
+const apiUrl = process.env.API_URL;
+
 export default function Home() {
+  // states
   const [todos, setTodos] = useState([]);
+
+  // refs
   const todoRef = useRef("");
 
   // fetch stored todos from db
   useEffect(() => {
     async function fetchTodos() {
       try {
-        const response = await axios.get("http://localhost:3000/api/todos");
+        const response = await axios.get(`${apiUrl}/api/todos`);
         const fetchedTodos = response.data.todos;
         if (fetchedTodos.length > 0) {
           setTodos(() => fetchedTodos);
@@ -32,10 +37,7 @@ export default function Home() {
       text: todoRef.current.value,
     };
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/todos",
-        requestObj
-      );
+      const response = await axios.post(`${apiUrl}/api/todos`, requestObj);
       const data = response.data.data;
       setTodos(() => [...todos, data]);
     } catch (err) {
@@ -45,9 +47,9 @@ export default function Home() {
 
   // delete todo handler function
   const deleteTodoHandler = async (id, e) => {
-    e.stopPropagation()
+    e.stopPropagation();
     try {
-      const response = await axios.delete(`http://localhost:3000/api/todos?id=${id}`);
+      const response = await axios.delete(`${apiUrl}/api/todos?id=${id}`);
       if (response.status == 204) {
         const newTodosArray = todos.filter((todo) => todo._id != id);
         setTodos(() => newTodosArray);
@@ -69,14 +71,19 @@ export default function Home() {
         </div>
         <div>
           <input className={styles.input} type="text" ref={todoRef} />
-          <button className={styles.button} onClick={addTodoHandler}>Add Todo</button>
+          <button className={styles.button} onClick={addTodoHandler}>
+            Add Todo
+          </button>
         </div>
         <div>
           <ul className={styles.ul}>
             {todos.map((todo) => (
               <li className={styles.li} key={todo._id}>
                 {todo.text}
-                <button className={styles.delete} onClick={deleteTodoHandler.bind(null, todo._id)}>
+                <button
+                  className={styles.delete}
+                  onClick={deleteTodoHandler.bind(null, todo._id)}
+                >
                   Delete Todo
                 </button>
               </li>
