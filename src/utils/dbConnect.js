@@ -4,7 +4,7 @@ const connectDB = async () => {
   try {
     // Your MongoDB connection string from the .env file
     const MONGODB_URI = process.env.MONGODB_URI;
-
+    
     if (!MONGODB_URI) {
       throw new Error("MongoDB connection string is missing in .env");
     }

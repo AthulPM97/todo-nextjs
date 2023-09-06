@@ -6,7 +6,6 @@ npm install
 ```
 2. Create .env and add the following:
 MONGODB_URI=mongodb+srv://athulpm:1oCxvhzbN9nvbni9@cluster0.tu8ulo3.mongodb.net/todos
-API_URL=http://localhost:3000
 
 3. Run the development server:
 

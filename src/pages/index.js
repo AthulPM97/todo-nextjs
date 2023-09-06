@@ -6,11 +6,12 @@ import axios from "axios";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const apiUrl = process.env.API_URL;
-
 export default function Home() {
   // states
   const [todos, setTodos] = useState([]);
+  
+  // api url
+  const apiUrl = "http://localhost:3000";
 
   // refs
   const todoRef = useRef("");
