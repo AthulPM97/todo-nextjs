@@ -6,10 +6,15 @@ import axios from "axios";
 
 const inter = Inter({ subsets: ["latin"] });
 
+const dummyTodos = [
+  { id: "1", text: "Water the plants" },
+  { id: "2", text: "Do the dishes" },
+];
+
 export default function Home() {
   // states
   const [todos, setTodos] = useState([]);
-  
+
   // api url
   const apiUrl = "http://localhost:3000";
 
@@ -20,11 +25,12 @@ export default function Home() {
   useEffect(() => {
     async function fetchTodos() {
       try {
-        const response = await axios.get(`${apiUrl}/api/todos`);
-        const fetchedTodos = response.data.todos;
-        if (fetchedTodos.length > 0) {
-          setTodos(() => fetchedTodos);
-        }
+        // const response = await axios.get(`${apiUrl}/api/todos`);
+        // const fetchedTodos = response.data.todos;
+        // if (fetchedTodos.length > 0) {
+        //   setTodos(() => fetchedTodos);
+        // }
+        setTodos(() => dummyTodos);
       } catch (err) {
         console.log("Error fetching todos ", err);
       }
@@ -48,6 +54,7 @@ export default function Home() {
 
   // delete todo handler function
   const deleteTodoHandler = async (id, e) => {
+    console.log("id , event", id, e);
     e.stopPropagation();
     try {
       const response = await axios.delete(`${apiUrl}/api/todos?id=${id}`);
